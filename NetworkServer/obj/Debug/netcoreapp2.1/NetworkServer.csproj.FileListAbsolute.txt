@@ -1,0 +1,12 @@
+D:\Users\Jerry\RiderProjects\NetworkServer\NetworkServer\bin\Debug\netcoreapp2.1\NetworkServer.deps.json
+D:\Users\Jerry\RiderProjects\NetworkServer\NetworkServer\bin\Debug\netcoreapp2.1\NetworkServer.runtimeconfig.json
+D:\Users\Jerry\RiderProjects\NetworkServer\NetworkServer\bin\Debug\netcoreapp2.1\NetworkServer.runtimeconfig.dev.json
+D:\Users\Jerry\RiderProjects\NetworkServer\NetworkServer\bin\Debug\netcoreapp2.1\NetworkServer.dll
+D:\Users\Jerry\RiderProjects\NetworkServer\NetworkServer\bin\Debug\netcoreapp2.1\NetworkServer.pdb
+D:\Users\Jerry\RiderProjects\NetworkServer\NetworkServer\obj\Debug\netcoreapp2.1\NetworkServer.csprojAssemblyReference.cache
+D:\Users\Jerry\RiderProjects\NetworkServer\NetworkServer\obj\Debug\netcoreapp2.1\NetworkServer.csproj.CoreCompileInputs.cache
+D:\Users\Jerry\RiderProjects\NetworkServer\NetworkServer\obj\Debug\netcoreapp2.1\NetworkServer.AssemblyInfoInputs.cache
+D:\Users\Jerry\RiderProjects\NetworkServer\NetworkServer\obj\Debug\netcoreapp2.1\NetworkServer.AssemblyInfo.cs
+D:\Users\Jerry\RiderProjects\NetworkServer\NetworkServer\obj\Debug\netcoreapp2.1\NetworkServer.dll
+D:\Users\Jerry\RiderProjects\NetworkServer\NetworkServer\obj\Debug\netcoreapp2.1\NetworkServer.pdb
+D:\Users\Jerry\RiderProjects\NetworkServer\NetworkServer\obj\Debug\netcoreapp2.1\NetworkServer.genruntimeconfig.cache

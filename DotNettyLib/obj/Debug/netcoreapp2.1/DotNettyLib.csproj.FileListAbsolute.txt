@@ -1,0 +1,12 @@
+D:\Users\Jerry\RiderProjects\NetworkServer\DotNettyLib\obj\Debug\netcoreapp2.1\DotNettyLib.csprojAssemblyReference.cache
+D:\Users\Jerry\RiderProjects\NetworkServer\DotNettyLib\obj\Debug\netcoreapp2.1\DotNettyLib.csproj.CoreCompileInputs.cache
+D:\Users\Jerry\RiderProjects\NetworkServer\DotNettyLib\obj\Debug\netcoreapp2.1\DotNettyLib.AssemblyInfoInputs.cache
+D:\Users\Jerry\RiderProjects\NetworkServer\DotNettyLib\obj\Debug\netcoreapp2.1\DotNettyLib.AssemblyInfo.cs
+D:\Users\Jerry\RiderProjects\NetworkServer\DotNettyLib\bin\Debug\netcoreapp2.1\DotNettyLib.deps.json
+D:\Users\Jerry\RiderProjects\NetworkServer\DotNettyLib\bin\Debug\netcoreapp2.1\DotNettyLib.runtimeconfig.json
+D:\Users\Jerry\RiderProjects\NetworkServer\DotNettyLib\bin\Debug\netcoreapp2.1\DotNettyLib.runtimeconfig.dev.json
+D:\Users\Jerry\RiderProjects\NetworkServer\DotNettyLib\bin\Debug\netcoreapp2.1\DotNettyLib.dll
+D:\Users\Jerry\RiderProjects\NetworkServer\DotNettyLib\bin\Debug\netcoreapp2.1\DotNettyLib.pdb
+D:\Users\Jerry\RiderProjects\NetworkServer\DotNettyLib\obj\Debug\netcoreapp2.1\DotNettyLib.dll
+D:\Users\Jerry\RiderProjects\NetworkServer\DotNettyLib\obj\Debug\netcoreapp2.1\DotNettyLib.pdb
+D:\Users\Jerry\RiderProjects\NetworkServer\DotNettyLib\obj\Debug\netcoreapp2.1\DotNettyLib.genruntimeconfig.cache

@@ -1,0 +1,16 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=10950acf_002D9156_002D4a09_002D95c1_002D1a11405ea9d7/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="StartServer #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::6B7274EE-5E40-4EC9-A369-F4041570A7F2::.NETCoreApp,Version=v2.1::DotNettyLib.Program.StartServer&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=65dbc867_002Daeab_002D4565_002Da805_002Decab2519b86d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="StartServer" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::6B7274EE-5E40-4EC9-A369-F4041570A7F2::.NETCoreApp,Version=v2.1::DotNettyLib.Program.StartServer&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=bbad1563_002D7c50_002D405f_002D98ab_002D6789ac3cce39/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="StartServer #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::6B7274EE-5E40-4EC9-A369-F4041570A7F2::.NETCoreApp,Version=v2.1::DotNettyLib.Program.StartServer&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

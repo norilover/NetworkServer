@@ -1,0 +1,80 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\Users\\Jerry\\RiderProjects\\NetworkServer\\NetworkServer\\NetworkServer.csproj": {}
+  },
+  "projects": {
+    "D:\\Users\\Jerry\\RiderProjects\\NetworkServer\\NetworkServer\\NetworkServer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Users\\Jerry\\RiderProjects\\NetworkServer\\NetworkServer\\NetworkServer.csproj",
+        "projectName": "NetworkServer",
+        "projectPath": "D:\\Users\\Jerry\\RiderProjects\\NetworkServer\\NetworkServer\\NetworkServer.csproj",
+        "packagesPath": "C:\\Users\\Jerry\\.nuget\\packages\\",
+        "outputPath": "D:\\Users\\Jerry\\RiderProjects\\NetworkServer\\NetworkServer\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Jerry\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\Jerry\\.nuget\\packages": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "targetAlias": "netcoreapp2.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "targetAlias": "netcoreapp2.1",
+          "dependencies": {
+            "DotNetty.Buffers": {
+              "target": "Package",
+              "version": "[0.7.0, )"
+            },
+            "DotNetty.Common": {
+              "target": "Package",
+              "version": "[0.7.0, )"
+            },
+            "Google.Protobuf": {
+              "target": "Package",
+              "version": "[3.19.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
