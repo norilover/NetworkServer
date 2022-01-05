@@ -1,23 +1,11 @@
 ﻿using System;
 using System.Threading;
-using DotNetty.Transport.Bootstrapping;
 using DotNettyLib.Application;
-using NUnit.Framework;
 
 namespace DotNettyLib
 {
     class Program
     {
-        struct MyStruct
-        {
-            public float X, Y;
-
-            public override string ToString()
-            {
-                return X + ", " + Y;
-            }
-        }
-        
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");

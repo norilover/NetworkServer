@@ -1,21 +1,27 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using System.Threading;
+﻿using System.IO;
 using System.Threading.Tasks;
 using DotNetty.Buffers;
 using DotNetty.Transport.Channels;
 using DotNettyLib.Application;
 using DotNettyLib.log;
-using DotNettyLib.Message.DetailMessage;
-using Microsoft.Extensions.ObjectPool;
+using DotNettyLib.Message;
+using DotNettyLib.Message.DataMessage;
+using DotNettyLib.Util;
 using ProtoBuf;
 
 namespace DotNettyLib.Handlers.Client
 {
     public class ClientHandler : ChannelHandlerAdapter
     {
-        private MemoryStream _memoryStream = new MemoryStream();
+        private MemoryStream _memoryStream;
+
+        private IConsumerProduct<Application.Message> _receiveMessageApplication;
+
+        public ClientHandler(IConsumerProduct<Application.Message> receiveMessageApplication)
+        {
+            _receiveMessageApplication = receiveMessageApplication;
+            _memoryStream = new MemoryStream();
+        }
 
         public override void ChannelActive(IChannelHandlerContext context)
         {
@@ -24,7 +30,7 @@ namespace DotNettyLib.Handlers.Client
             // JoinMessage
             JoinMessage joinMessage = new JoinMessage();
             joinMessage.Id = 111111111 + "";
-
+            
             // 将序列化数据填入_memoryStream
             _memoryStream.Position = 0;
             _memoryStream.SetLength(0);
@@ -44,7 +50,7 @@ namespace DotNettyLib.Handlers.Client
         public override void ChannelInactive(IChannelHandlerContext context)
         {
             Log.Info("ChannelInactive");
-            
+
             // LeaveMessage
             LeaveMessage leaveMessage = new LeaveMessage();
 
@@ -91,11 +97,8 @@ namespace DotNettyLib.Handlers.Client
                 _memoryStream.WriteAsync(buffer.Array, buffer.ArrayOffset, buffer.ReadableBytes);
                 _memoryStream.Position = 0;
 
-                // 反序列化成对象
-                var deserialize = Serializer.DeserializeWithLengthPrefix<Application.Message>(_memoryStream, PrefixStyle.Fixed32);
-
                 // 消费消息
-                ConsumeMessage(deserialize);
+                ConsumeMessage(ref _memoryStream);
             }
 
             Log.Debug("Client Read content: " + str);
@@ -113,17 +116,25 @@ namespace DotNettyLib.Handlers.Client
             // });
         }
 
-        private void ConsumeMessage(Application.Message msg)
+        private void ConsumeMessage(ref MemoryStream ms)
         {
-            switch (msg)
+            var msg = NetUtil.GetDeserialize<Application.Message>(ref ms);
+
+            ms.Position = 0;
+            
+            switch (msg.MessageCode)
             {
-                case Message.DetailMessage.CommonMessage commonMessage:
+                case MessageCode.CommonMessage:
                     Log.Debug("Client receive message");
+                    
+                    var commonMessage = NetUtil.GetDeserialize<CommonMessage>(ref ms);
+                    _receiveMessageApplication.TryAdd(commonMessage);
+                    
                     break;
-                case JoinMessage joinMessage:
+                case MessageCode.Join:
                     Log.Debug("Client receive join message");
                     break;
-                case LeaveMessage leaveMessage:
+                case MessageCode.Leave:
                     Log.Debug("Client receive leave message");
                     break;
             }

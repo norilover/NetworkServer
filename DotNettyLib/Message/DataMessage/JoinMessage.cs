@@ -1,12 +1,11 @@
-﻿using DotNettyLib.Application;
-using ProtoBuf;
+﻿using ProtoBuf;
 
-namespace DotNettyLib.Message.DetailMessage
+namespace DotNettyLib.Message.DataMessage
 {
     [ProtoContract]
     public class JoinMessage : Application.Message
     {
-        [ProtoMember(2)] public string Id;
+        [ProtoMember(1)] public string Id;
         public MessageCode MessageCode => MessageCode.Join;
     }
 }

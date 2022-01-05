@@ -1,13 +1,9 @@
-﻿using System;
-using System.Net;
-using System.Threading;
+﻿using System.Threading;
 using DotNetty.Codecs;
-using DotNetty.Handlers.Timeout;
 using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
 using DotNettyLib.Config;
-using DotNettyLib.Handlers;
 using DotNettyLib.Handlers.Client;
 using DotNettyLib.log;
 
@@ -17,6 +13,8 @@ namespace DotNettyLib.Application
     {
         private IChannel _channel;
         private Bootstrap _clientBootstrap;
+        
+        private readonly IConsumerProduct<Message> _receiveMessageApplication = new ReceiveApplication<Message>();
 
         public void Start()
         {
@@ -40,7 +38,7 @@ namespace DotNettyLib.Application
                         socketChannel.Pipeline
                             .AddLast("enc", new LengthFieldPrepender(4))
                             .AddLast("dec", new LengthFieldBasedFrameDecoder(1 << 22, 0, 4, 0, 4))
-                            .AddLast("server handler", new ClientHandler());
+                            .AddLast("server handler", new ClientHandler(_receiveMessageApplication));
                     }));
             }
 
@@ -49,17 +47,8 @@ namespace DotNettyLib.Application
             // 记录channel
             _channel = channelTask.Result;
 
-            // SocketAddress socketAddress = _channel.LocalAddress.Serialize();
-
-            // 连接失败
-            // if (!channelTask.Wait(1))
-            // {
-            //     Log.Error("Can't connect the server based on ip: " + ServerConfig.Ip + " port: " + ServerConfig.Port);
-            // }
-
             Thread.Sleep(1000);
             Start();
-
 
             Log.Info("Connect ip:port " + _channel.LocalAddress);
         }

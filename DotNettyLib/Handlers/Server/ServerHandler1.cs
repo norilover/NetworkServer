@@ -1,7 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using DotNetty.Buffers;
 using DotNetty.Handlers.Timeout;
@@ -9,25 +7,38 @@ using DotNetty.Transport.Channels;
 using DotNettyLib.Application;
 using DotNettyLib.log;
 using DotNettyLib.Message;
-using DotNettyLib.Message.DetailMessage;
+using DotNettyLib.Message.DataMessage;
+using DotNettyLib.Message.NetMessage;
+using DotNettyLib.Util;
 using Microsoft.Extensions.ObjectPool;
 using ProtoBuf;
 
 namespace DotNettyLib.Handlers
 {
-    public class ServerHandler1<T> : ChannelHandlerAdapter
+    public class ServerHandler1 : ChannelHandlerAdapter
     {
         private readonly ObjectPool<MemoryStream> _memoryStreamPool =
             new DefaultObjectPool<MemoryStream>(new DefaultPooledObjectPolicy<MemoryStream>());
 
-        private IConsumerProduct<T> _receiveMessageApplication;
+        private IConsumerProduct<Application.Message> _receiveMessageApplication;
+        
+        private readonly bool _isSupportConcurrent = false;
 
-        public ServerHandler1(IConsumerProduct<T> receiveMessageApplication)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="isSupportConcurrent">是否支持并发</param>
+        /// <param name="receiveMessageApplication">当支持并发时，确保这个集合可以处理多线程并发访问的情况</param>
+        public ServerHandler1(bool isSupportConcurrent, IConsumerProduct<Application.Message> receiveMessageApplication)
         {
             _receiveMessageApplication = receiveMessageApplication;
+            _isSupportConcurrent = isSupportConcurrent;
         }
 
-        public override bool IsSharable => true;
+        /// <summary>
+        /// 允许创建多个handle并发访问
+        /// </summary>
+        public override bool IsSharable => _isSupportConcurrent;
 
         /// <summary>
         /// 初次建立连接时调用
@@ -36,6 +47,10 @@ namespace DotNettyLib.Handlers
         public override void ChannelActive(IChannelHandlerContext context)
         {
             Log.Debug("Server ChannelActive");
+
+            // Connected network message
+            _receiveMessageApplication.TryAdd(new NetMessage(context.Channel.Id, MessageCode.Connect));
+
             base.ChannelActive(context);
         }
 
@@ -46,6 +61,10 @@ namespace DotNettyLib.Handlers
         public override void ChannelInactive(IChannelHandlerContext context)
         {
             Log.Debug("ChannelInActive");
+
+            // Disconnected network message
+            _receiveMessageApplication.TryAdd(new NetMessage(context.Channel.Id, MessageCode.Disconnect));
+
             base.ChannelInactive(context);
         }
 
@@ -73,14 +92,16 @@ namespace DotNettyLib.Handlers
 
                 MemoryStream memoryStream = _memoryStreamPool.Get();
 
+                // Sign the start length
                 memoryStream.SetLength(0);
+                
                 // memoryStream.WriteAsync(seg.Array, seg.Offset, seg.Count).Wait();
                 memoryStream.WriteAsync(buffer.Array, buffer.ArrayOffset, buffer.ReadableBytes).Wait();
                 memoryStream.Position = 0;
 
-                var msg = Serializer.DeserializeWithLengthPrefix<Application.Message>(memoryStream,
-                    PrefixStyle.Fixed32);
-                ConsumeMessage(msg, memoryStream);
+                ConsumeMessage(ref memoryStream);
+                
+                _memoryStreamPool.Return(memoryStream);
             }
 
             Log.Debug("Server Read content: " + str);
@@ -112,29 +133,45 @@ namespace DotNettyLib.Handlers
             // });
         }
 
-        private void ConsumeMessage(Application.Message msg, MemoryStream memoryStream)
+        private void ConsumeMessage(ref MemoryStream memoryStream)
         {
-            memoryStream.Position = 0;
+            // Get the type of message 
+            var msg = NetUtil.GetDeserialize<Application.Message>(ref memoryStream);
             
+            // Set the position to zero for deserializing the data
+            memoryStream.Position = 0;
+
+            Application.Message msg0 = null;
+            
+            // According to the type to dispatch
             switch (msg.MessageCode)
             {
-                case MessageCode.Message:
+                case MessageCode.CommonMessage:
                     Log.Debug("Server receive message");
+                    var commonMessage = NetUtil.GetDeserialize<CommonMessage>(ref memoryStream);
+                    
+                    msg0 = commonMessage;
                     break;
                 case MessageCode.Join:
                     Log.Debug("Server receive join message");
-                    JoinMessage joinMessage =
-                        Serializer.DeserializeWithLengthPrefix<JoinMessage>(memoryStream, PrefixStyle.Fixed32);
-                    if(joinMessage != null)
+                    var joinMessage = NetUtil.GetDeserialize<JoinMessage>(ref memoryStream);
+                    if (joinMessage != null)
                         Log.Debug("ID: " + joinMessage.Id);
+                    
+                    msg0 = joinMessage;
                     break;
                 case MessageCode.Leave:
                     Log.Debug("Server receive leave message");
+
+                    msg0 = NetUtil.GetDeserialize<LeaveMessage>(ref memoryStream);
                     break;
                 case MessageCode.Unknown:
                     Log.Debug("Server receive unknown message");
                     break;
             }
+            
+            if(msg0 != null)
+                _receiveMessageApplication.TryAdd(msg0);
         }
 
         private void SendSucc(Task arg1, object arg2)

@@ -4,9 +4,9 @@ namespace DotNettyLib.Application
 {
     public class ReceiveApplication<T> : IConsumerProduct<T>
     {
-        private Queue<T> _queue = new Queue<T>();
+        private readonly Queue<T> _queue = new Queue<T>();
 
-        public bool IsEmpty() => _queue.Count < 0;
+        public bool IsEmpty() => _queue.Count <= 0;
         public int Size() => _queue.Count;
 
         public bool TryTake(out T msg)

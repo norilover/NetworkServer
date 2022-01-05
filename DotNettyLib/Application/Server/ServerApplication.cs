@@ -15,7 +15,7 @@ namespace DotNettyLib.Application
     public class ServerApplication : IApplication
     {
         private IChannel _channel;
-        private IConsumerProduct<object> _receiveMessageApplication = new ReceiveApplication<object>();
+        private readonly IConsumerProduct<Message> _receiveMessageApplication = new ConcurrentReceiveApplication<Message>();
 
         public void Start()
         {
@@ -36,7 +36,7 @@ namespace DotNettyLib.Application
                         .AddLast("enc", new LengthFieldPrepender(4))
                         .AddLast("dec", new LengthFieldBasedFrameDecoder(1 << 22, 0, 4, 0, 4))
                         // .AddLast("idle handler", new IdleStateHandler(60, 0, 0))
-                        .AddLast("server handler", new ServerHandler1<object>(_receiveMessageApplication));
+                        .AddLast("server handler", new ServerHandler1(true, _receiveMessageApplication));
                 }));
 
             var channel = serverBootstrap.BindAsync(IPAddress.Any, ServerConfig.Port).Result;
